@@ -1,7 +1,9 @@
 local Parallax = require("parallax")
+local Spaceship = require("spaceship")
 
 local gameState = "start"
 local parallax
+local spaceship
 local windowWidth
 local windowHeight
 
@@ -21,7 +23,10 @@ function love.load()
     
     love.window.setMode(windowWidth, windowHeight, { resizable = false })
     love.window.setTitle("SpaceShip - Parallax Scrolling")
-    
+   
+    spaceship = Spaceship:new(50, windowHeight / 2)
+    spaceship:load()
+
     playButton.x = (windowWidth - playButton.width) / 2
     playButton.y = windowHeight / 2 + 50
 end
@@ -29,6 +34,7 @@ end
 function love.update(dt)
     if gameState == "playing" then
         parallax:update(dt)
+	spaceship:update(dt, windowWidth, windowHeight)
     end
 end
 
@@ -40,6 +46,7 @@ function love.draw()
         drawStartScreen()
     elseif gameState == "playing" then
         parallax:draw()
+	spaceship:draw()
     end
 end
 
